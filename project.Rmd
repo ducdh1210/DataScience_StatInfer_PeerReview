@@ -1,9 +1,12 @@
 Coursera Statistical Inference Project
 ========================================================
+### Purpose
+The purpose of this report is to analyze the exponential distribution. Both the mean and standard deviation of the exponential distribution are 1/lambda, where lambda is the rate parameter. In this report we are using a lambda value of 0.2.
 
-1. Data Simulation
+### Data Simulation
+For our simulation, we are going to sample 40 values from the exponential distribution in 1000 simulation runs. The code to run the simulation is as follows:
 
-```{r,cache=TRUE,echo=FALSE}
+```{r readinData}
 set.seed(25)
 lambda <- 0.2
 expectedMean <- expectedSd <- 1/lambda
@@ -11,11 +14,11 @@ numSamples <- 40
 numSims <- 1000
 sampleData <- matrix(rexp(numSamples * numSims, lambda), ncol = numSamples)
 means <- apply(sampleData, 1, mean)
-variances <- apply(sampleData, 1, var)```
-
-You can also embed plots, for example:
-
-```{r fig.width=7, fig.height=6}
-plot(cars)
+variances <- apply(sampleData, 1, var)
 ```
+
+
+
+
+
 
