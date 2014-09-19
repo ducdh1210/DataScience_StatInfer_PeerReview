@@ -34,7 +34,7 @@ print(paste("Our expected sample variance =", 25/40))
 ### Distribution of Sample Variances
 Now let's look at the distribution of sample variances. A plot of these variances shows that they are centered around (1/lambda)^2 (25) as expected.
 
-``` {r plotSamplVariances, echo=TRUE, fig.height=3}
+``` {r plotSamplVariances, echo=FALSE, fig.height=3}
 df <- as.data.frame(variances)
 plot <- ggplot(df, aes(x=variances)) 
 plot <- plot + geom_histogram(aes(y=..density..), colour="gray", fill="#daf0dd", binwidth=10)
