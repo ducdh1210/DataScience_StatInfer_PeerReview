@@ -1,13 +1,17 @@
 Coursera Statistical Inference Project
 ========================================================
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **Help** toolbar button for more details on using R Markdown).
+1. Data Simulation
 
-When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
-```
+```{r,cache=TRUE,echo=FALSE}
+set.seed(25)
+lambda <- 0.2
+expectedMean <- expectedSd <- 1/lambda
+numSamples <- 40
+numSims <- 1000
+sampleData <- matrix(rexp(numSamples * numSims, lambda), ncol = numSamples)
+means <- apply(sampleData, 1, mean)
+variances <- apply(sampleData, 1, var)```
 
 You can also embed plots, for example:
 
