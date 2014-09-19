@@ -16,6 +16,46 @@ sampleData <- matrix(rexp(numSamples * numSims, lambda), ncol = numSamples)
 means <- apply(sampleData, 1, mean)
 variances <- apply(sampleData, 1, var)
 ```
+### Distribution of Sample Means
+Let's first look at the distribution of our sample means. If we plot a histogram of the sample means we see that they are centered around the theoretical mean of 1/lambda (5). We also plot a normal distribution curve with a mean of 1/lambda and a standard deviation of (1/lambda)/sqrt(40) and see that the distribution of our sample means is approximately normal. We also print out the variance of our sample means and see that it is close to its expected value (1/labmda)^2/40.
+``` {r plotSampleMeans, echo=FALSE, fig.height=2.8}
+meanOfMeans <- mean(means)
+df <- as.data.frame(means)
+plot <- ggplot(df, aes(x=means)) 
+plot <- plot + geom_histogram(aes(y=..density..), colour="gray", fill="#daf0dd", binwidth=0.1)
+plot <- plot + stat_function(fun=dnorm, args=list(mean=expectedMean, sd=expectedSd/sqrt(40)))
+plot <- plot + geom_vline(xintercept = meanOfMeans)
+print(plot)
+
+print(paste("Our sample variance = ", var(means)))
+print(paste("Our expected sample variance =", 25/40))
+```
+
+### Distribution of Sample Variances
+Now let's look at the distribution of sample variances. A plot of these variances shows that they are centered around (1/lambda)^2 (25) as expected.
+
+``` {r plotSamplVariances, echo=FALSE, fig.height=3}
+df <- as.data.frame(variances)
+plot <- ggplot(df, aes(x=variances)) 
+plot <- plot + geom_histogram(aes(y=..density..), colour="gray", fill="#daf0dd", binwidth=10)
+plot <- plot + geom_vline(xintercept = (1/lambda)^2)
+print(plot)
+```
+
+### Confidence Interval
+Finally we calculate the 95% confidence interval for our sample means and show that the interval covers over 95% of our samples..
+``` {r confidenceInterval}
+interval <- meanOfMeans + c(-1, 1) * qt(.975, numSamples - 1) * (1/lambda) / sqrt(numSamples)
+covered <- sapply(means, function(mean)
+{
+      interval[1] < mean & interval[2] > mean 
+})
+
+print(paste("Our confidence interval =", toString(round(interval, 4))))
+print(paste(sum(covered) / numSims * 100, "% of our sample means are covered by this interval.", sep=""))
+```
+
+
 
 
 
