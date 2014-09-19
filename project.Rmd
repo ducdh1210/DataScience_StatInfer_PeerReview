@@ -44,7 +44,7 @@ print(plot)
 
 ### Confidence Interval
 Finally we calculate the 95% confidence interval for our sample means and show that the interval covers over 95% of our samples..
-``` {r confidenceInterval}
+``` {r confidenceInterval, results='markup'}
 interval <- meanOfMeans + c(-1, 1) * qt(.975, numSamples - 1) * (1/lambda) / sqrt(numSamples)
 covered <- sapply(means, function(mean)
 {
