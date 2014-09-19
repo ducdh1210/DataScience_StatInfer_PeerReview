@@ -1,3 +1,7 @@
+---
+output: pdf_document
+---
+
 Coursera Statistical Inference Project
 ========================================================
 ### Purpose
