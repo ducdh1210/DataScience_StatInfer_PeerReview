@@ -1,6 +1,3 @@
----
-output: pdf_document
----
 
 Coursera Statistical Inference Project
 ========================================================
@@ -11,6 +8,7 @@ The purpose of this report is to analyze the exponential distribution. Both the 
 For our simulation, we are going to sample 40 values from the exponential distribution in 1000 simulation runs. The code to run the simulation is as follows:
 
 ```{r readinData, eval=TRUE}
+library(ggplot2)
 set.seed(25)
 lambda <- 0.2
 expectedMean <- expectedSd <- 1/lambda
@@ -21,18 +19,19 @@ means <- apply(sampleData, 1, mean)
 variances <- apply(sampleData, 1, var)
 ```
 ### Distribution of Sample Means
-Let's first look at the distribution of our sample means. If we plot a histogram of the sample means we see that they are centered around the theoretical mean of 1/lambda (5). We also plot a normal distribution curve with a mean of 1/lambda and a standard deviation of (1/lambda)/sqrt(40) and see that the distribution of our sample means is approximately normal. We also print out the variance of our sample means and see that it is close to its expected value (1/labmda)^2/40.
+Let's first look at the distribution of our sample means. If we plot a histogram of the sample means we see that they are centered around the theoretical mean of 1/lambda(5). We also plot a normal distribution curve with a mean of 1/lambda and a standard deviation of (1/lambda)/sqrt(numSamples) and see that the distribution of our sample means is approximately normal. We also print out the variance of our sample means and see that it is close to its expected value sample variance.
+
 ``` {r plotSampleMeans, eval=TRUE, echo=FALSE, fig.height=2.8}
 meanOfMeans <- mean(means)
 df <- as.data.frame(means)
 plot <- ggplot(df, aes(x=means)) 
-plot <- plot + geom_histogram(aes(y=..density..), colour="gray", fill="#daf0dd", binwidth=0.1)
+plot <- plot + geom_histogram(aes(y=..density..), colour="gray", fill="blue", binwidth=0.1)
 plot <- plot + stat_function(fun=dnorm, args=list(mean=expectedMean, sd=expectedSd/sqrt(40)))
 plot <- plot + geom_vline(xintercept = meanOfMeans)
 print(plot)
 
-print(paste("Our sample variance = ", var(means)))
-print(paste("Our expected sample variance =", 25/40))
+print(paste("Our simulated sample variance = ", var(means)))
+print(paste("Our theoritical sample variance =", 25/40))
 ```
 
 ### Distribution of Sample Variances
@@ -41,7 +40,7 @@ Now let's look at the distribution of sample variances. A plot of these variance
 ``` {r plotSamplVariances,  eval=TRUE, echo=TRUE, fig.height=3}
 df <- as.data.frame(variances)
 plot <- ggplot(df, aes(x=variances)) 
-plot <- plot + geom_histogram(aes(y=..density..), colour="gray", fill="#daf0dd", binwidth=10)
+plot <- plot + geom_histogram(aes(y=..density..), colour="gray", fill="blue", binwidth=3)
 plot <- plot + geom_vline(xintercept = (1/lambda)^2)
 print(plot)
 ```
